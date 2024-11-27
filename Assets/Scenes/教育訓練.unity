@@ -1231,7 +1231,7 @@ MonoBehaviour:
   - {fileID: 888876793}
   - {fileID: 353871147}
   inkAssets:
-  - {fileID: 4900000, guid: 5716481ad4a26904599454417555ee2a, type: 3}
+  - {fileID: 4900000, guid: 5d323983852b61e4fa7726ce77679507, type: 3}
   - {fileID: 4900000, guid: bad8608095221e4488e8dbd7225443a8, type: 3}
   disappearui: {fileID: 33578528}
   characterDialogPrefab: {fileID: 1329311630}
@@ -4264,5 +4264,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 1801480742}
   - {fileID: 674697399}
-  - {fileID: 1808085643}
   - {fileID: 91835003}
+  - {fileID: 1808085643}
