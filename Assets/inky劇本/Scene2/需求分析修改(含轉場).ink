@@ -35,41 +35,33 @@ VAR choiceC5_done = false
 
 === companyA ===
 {choiceA1_done && choiceA2_done && choiceA3_done && choiceA4_done && choiceA5_done:
-    * [進行其他公司分析] 您希望分析哪間公司-> analysis
+    * [進行其他公司分析] 返回選擇 -> analysis
 }
-<<<<<<< Updated upstream
-*[年輕人是指哪個年齡段？] {not choiceA1_done} ->choiceA1
-*[您希望如何分配這100,000美元？] {not choiceA2_done} ->choiceA2
-*[是否能在六個月內提升品牌認知度？] {not choiceA3_done} ->choiceA3
-*[如果效果不如預期，如何應對並調整策略？] {not choiceA4_done} ->choiceA4
-*[您是否已經嘗試過其他的廣告平台？] {not choiceA5_done} ->choiceA5
-=======
 * {not choiceA1_done} [年輕人群體的年齡範圍是什麼？] -> choiceA1
 * {not choiceA2_done} [100,000美元預算如何分配？] -> choiceA2
 * {not choiceA3_done} [六個月內提升品牌認知度20%可行嗎？] -> choiceA3
 * {not choiceA4_done} [是否考慮分階段評估並調整策略？] -> choiceA4
 * {not choiceA5_done} [是否嘗試過其他廣告平台？效果如何？] -> choiceA5
->>>>>>> Stashed changes
 
 === choiceA1 ===
 我們主要針對18-35歲的年輕人，他們對健康食品有較高的興趣。#GreenVital Foods代表
-* [返回] 請選擇其他分析 -> returnFromChoiceA1
+* [返回] 返回選擇 -> returnFromChoiceA1
 
 === choiceA2 ===
 我們計劃將預算分配為三個部分：30%用於廣告創意和製作，50%用於IG廣告投放，20%用於與影響者的合作。這樣的分配方式可以確保我們在創意、投放和推廣上都能有所保障。#GreenVital Foods代表
-* [返回] 請選擇其他分析 -> returnFromChoiceA2
+* [返回] 返回選擇 -> returnFromChoiceA2
 
 === choiceA3 ===
-六個月內提升品牌認知度有挑戰，但我們相信可行，通過密集曝光和精準定位加速這一過程，並密切監控隨時調整。#GreenVital Foods代表
-* [返回] 請選擇其他分析 -> returnFromChoiceA3
+六個月內提升20%品牌認知度有挑戰，但我們相信可行，通過密集曝光和精準定位加速這一過程，並密切監控隨時調整。#GreenVital Foods代表
+* [返回] 返回選擇 -> returnFromChoiceA3
 
 === choiceA4 ===
 我們計劃中期和後期評估效果，若不如預期，將靈活調整策略，甚至加強影響者合作，以確保達成目標。#GreenVital Foods代表
-* [返回] 請選擇其他分析 -> returnFromChoiceA4
+* [返回] 返回選擇 -> returnFromChoiceA4
 
 === choiceA5 ===
 我們在Footbook和Aoogle Ads上投放過廣告，效果不錯，但年輕用戶參與有限，因此希望通過Instagrum吸引更多年輕群體。#GreenVital Foods代表
-* [返回] 請選擇其他分析 -> returnFromChoiceA5
+* [返回] 返回選擇 -> returnFromChoiceA5
 
 === returnFromChoiceA1 ===
 ~ choiceA1_done = true
@@ -95,7 +87,7 @@ VAR choiceC5_done = false
 
 === companyB ===
 {choiceB1_done && choiceB2_done && choiceB3_done && choiceB4_done && choiceB5_done:
-    * [進行其他公司分析] 您希望分析哪間公司 -> analysis
+    * [進行其他公司分析] 返回分析 -> analysis
 }
 * {not choiceB1_done} [目標客群的消費習慣與偏好是什麼？] -> choiceB1
 * {not choiceB2_done} [預算如何分配更有效？] -> choiceB2
@@ -106,23 +98,23 @@ VAR choiceC5_done = false
 
 === choiceB1 ===
 我們的目標客群是25-35歲女性，她們關注時尚和生活品質，對奢侈品有強烈購買意願。我們希望通過Instagrum更直接地與她們互動。#Elegance Accessories代表
-* [返回] 請選擇其他分析 -> returnFromChoiceB1
+* [返回] 返回選擇 -> returnFromChoiceB1
 
 === choiceB2 ===
 我們計畫預算分配為30%創意製作，40%IG廣告，30%高端影響者合作，確保各環節達到最佳效果。#Elegance Accessories代表
-* [返回] 請選擇其他分析 -> returnFromChoiceB2
+* [返回] 返回選擇 -> returnFromChoiceB2
 
 === choiceB3 ===
 三個月內提升10%銷售量有挑戰，但我們有信心通過精準投放和影響者合作實現目標，並根據市場反應調整策略。#Elegance Accessories代表
-* [返回] 請選擇其他分析 -> returnFromChoiceB3
+* [返回] 返回選擇 -> returnFromChoiceB3
 
 === choiceB4 ===
 沒錯，我們認為與高端影響者合作是非常有效的推廣方式。他們的粉絲群體通常對品質和時尚有較高的要求，能夠有效提升我們的品牌價值。#Elegance Accessories代表
-* [返回] 請選擇其他分析 -> returnFromChoiceB4
+* [返回] 返回選擇 -> returnFromChoiceB4
 
 === choiceB5 ===
 我們希望在廣告中強調產品的高品質材料和精湛工藝，讓消費者感受到產品的高端和奢華。#Elegance Accessories代表
-* [返回] 請選擇其他分析 -> returnFromChoiceB5
+* [返回] 返回選擇 -> returnFromChoiceB5
 
 === returnFromChoiceB1 ===
 ~ choiceB1_done = true
@@ -148,7 +140,7 @@ VAR choiceC5_done = false
 
 === companyC ===
 {choiceC1_done && choiceC2_done && choiceC3_done && choiceC4_done && choiceC5_done:
-    * [進行其他公司分析] 您希望分析哪間公司 -> analysis
+    * [進行其他公司分析] 返回分析 -> analysis
 }
 * {not choiceC1_done} [目標客群的消費習慣是什麼？] -> choiceC1
 * {not choiceC2_done} [您認為哪種推廣方式最有效？] -> choiceC2
@@ -159,23 +151,23 @@ VAR choiceC5_done = false
 
 === choiceC1 ===
 我們的目標客群是25-45歲的中高收入群體，注重環保和可持續生活方式，願意為品質和環保理念買單。#EcoEssentials代表
-* [返回] 請選擇其他分析 -> returnFromChoiceC1
+* [返回] 返回選擇 -> returnFromChoiceC1
 
 === choiceC2 ===
 我們的70,000美元預算分配為30,000美元影響者合作，20,000美元社交媒體廣告，20,000美元內容創作和推廣活動。#EcoEssentials代表
-* [返回] 請選擇其他分析 -> returnFromChoiceC2
+* [返回] 返回選擇 -> returnFromChoiceC2
 
 === choiceC3 ===
 五個月內，我們每月評估品牌忠誠度提升，設定階段性目標，以確保按時達成最終目標。#EcoEssentials代表
-* [返回] 請選擇其他分析 -> returnFromChoiceC3
+* [返回] 返回選擇 -> returnFromChoiceC3
 
 === choiceC4 ===
 我們計劃五個月內提升品牌忠誠度20%，通過與現有客戶互動、提供優質服務和推出會員獎勵計劃達成。#EcoEssentials代表
-* [返回] 請選擇其他分析 -> returnFromChoiceC4
+* [返回] 返回選擇 -> returnFromChoiceC4
 
 === choiceC5 ===
 我們認為與環保主題影響者合作是擴大品牌影響力的有效方式，這些影響者的價值觀與我們非常契合。#EcoEssentials代表
-* [返回] 請選擇其他分析 -> returnFromChoiceC5
+* [返回] 返回選擇 -> returnFromChoiceC5
 
 === returnFromChoiceC1 ===
 ~ choiceC1_done = true
