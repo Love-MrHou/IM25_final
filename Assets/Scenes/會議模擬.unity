@@ -1184,7 +1184,7 @@ MonoBehaviour:
   systemAnalystPrefab: {fileID: 480296909}
   engineerPrefab: {fileID: 573700889}
   designerPrefab: {fileID: 304387885}
-  _inkAssets: {fileID: 4900000, guid: 8267ef6ac62597c4c86c19272ae12468, type: 3}
+  _inkAssets: {fileID: 4900000, guid: 05565f82ba371c64bb0b6198701aefc4, type: 3}
 --- !u!83 &671157110
 AudioClip:
   m_ObjectHideFlags: 0
