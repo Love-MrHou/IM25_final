@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.unity.2d.sprite": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {}
+    },
     "com.unity.burst": {
       "version": "1.8.8",
       "depth": 1,
@@ -254,6 +260,13 @@
         "com.unity.ugui": "1.0.0",
         "com.unity.xr.legacyinputhelpers": "2.1.4"
       }
+    },
+    "xyz.candycoded.env": {
+      "version": "https://github.com/CandyCoded/env.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "4bc9e79aa67534214392b5d91d9eda60613767d9"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

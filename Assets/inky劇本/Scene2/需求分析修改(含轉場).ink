@@ -37,11 +37,11 @@ VAR choiceC5_done = false
 {choiceA1_done && choiceA2_done && choiceA3_done && choiceA4_done && choiceA5_done:
     * [進行其他公司分析] 返回選擇 -> analysis
 }
-*[您提到的年輕人群體具體是指哪個年齡段？] {not choiceA1_done} ->choiceA1
-*[在預算方面，您希望如何分配這100,000美元？] {not choiceA2_done} ->choiceA2
-*[在六個月內達成20%的品牌認知度提升，您覺得這個時程安排可行嗎？是否有過類似的經驗來支持這個目標？] {not choiceA3_done} ->choiceA3
-*[您是否考慮過在這六個月內分階段評估廣告效果？如果效果不如預期，如何應對並調整策略？] {not choiceA4_done} ->choiceA4
-*[您是否已經嘗試過其他的廣告平台？效果如何？] {not choiceA5_done} ->choiceA5
+* {not choiceA1_done} [年輕人群體的年齡範圍是什麼？] -> choiceA1
+* {not choiceA2_done} [100,000美元預算如何分配？] -> choiceA2
+* {not choiceA3_done} [六個月內提升品牌認知度20%可行嗎？] -> choiceA3
+* {not choiceA4_done} [是否考慮分階段評估並調整策略？] -> choiceA4
+* {not choiceA5_done} [是否嘗試過其他廣告平台？效果如何？] -> choiceA5
 
 === choiceA1 ===
 我們主要針對18-35歲的年輕人，他們對健康食品有較高的興趣。#GreenVital Foods代表
@@ -89,11 +89,12 @@ VAR choiceC5_done = false
 {choiceB1_done && choiceB2_done && choiceB3_done && choiceB4_done && choiceB5_done:
     * [進行其他公司分析] 返回分析 -> analysis
 }
-*[您提到的目標客群是25-35歲的女性，能否具體描述這些客群的消費習慣或偏好？過去您是如何針對這群體進行營銷的？] {not choiceB1_done} ->choiceB1
-*[150,000美元的預算分配上，您有沒有特別的考量？在廣告創意、投放和影響者合作之間，您希望如何分配這筆預算？] {not choiceB2_done} ->choiceB2
-*[三個月內達成10%的銷售量提升是一個比較緊迫的目標，您覺得這個時程安排可行嗎？是否有過類似的經驗來支持這個目標？] {not choiceB3_done} ->choiceB3
-*[您是否考慮過與高端影響者合作來進一步推廣？] {not choiceB4_done} ->choiceB4
-*[您對於在廣告中強調產品的哪些特點有特別的要求？] {not choiceB5_done} ->choiceB5
+* {not choiceB1_done} [目標客群的消費習慣與偏好是什麼？] -> choiceB1
+* {not choiceB2_done} [預算如何分配更有效？] -> choiceB2
+* {not choiceB3_done} [10%銷售增長的時程安排可行嗎？] -> choiceB3
+* {not choiceB4_done} [是否考慮與高端影響者合作？] -> choiceB4
+* {not choiceB5_done} [您希望廣告強調哪些產品特點？] -> choiceB5
+
 
 === choiceB1 ===
 我們的目標客群是25-35歲女性，她們關注時尚和生活品質，對奢侈品有強烈購買意願。我們希望通過Instagrum更直接地與她們互動。#Elegance Accessories代表
@@ -141,11 +142,12 @@ VAR choiceC5_done = false
 {choiceC1_done && choiceC2_done && choiceC3_done && choiceC4_done && choiceC5_done:
     * [進行其他公司分析] 返回分析 -> analysis
 }
-*[您提到的目標客群具體是哪一類消費者？他們在環保產品方面的消費習慣和偏好是什麼？] {not choiceC1_done} ->choiceC1
-*[考慮到您目前的預算，您認為哪些推廣方式最能有效利用資金，達到您預期的效果？] {not choiceC2_done} ->choiceC2
-*[在這五個月內，您對達成這些目標的時程是否有具體的計劃和階段性目標？] {not choiceC3_done} ->choiceC3
-*[您對於提升品牌忠誠度有什麼具體的數據目標或預期嗎？] {not choiceC4_done} ->choiceC4
-*[您有考慮過與環保主題的影響者或組織合作來推廣嗎？] {not choiceC5_done} ->choiceC5
+* {not choiceC1_done} [目標客群的消費習慣是什麼？] -> choiceC1
+* {not choiceC2_done} [您認為哪種推廣方式最有效？] -> choiceC2
+* {not choiceC3_done} [這五個月的計劃是什麼？] -> choiceC3
+* {not choiceC4_done} [提升品牌忠誠度的具體目標是什麼？] -> choiceC4
+* {not choiceC5_done} [是否考慮與環保影響者合作？] -> choiceC5
+
 
 === choiceC1 ===
 我們的目標客群是25-45歲的中高收入群體，注重環保和可持續生活方式，願意為品質和環保理念買單。#EcoEssentials代表

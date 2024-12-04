@@ -3,57 +3,56 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
 namespace MyProject.Dialogs
 {
-    public class test : MonoBehaviour
+    public class Scene2_Script : MonoBehaviour
     {
-        public Text dialogText;  // é¡¯ç¤ºå°è©±çš„ Text
-        public Button[] buttons;  // ä¸»å°è©±æ¡†çš„é¸é …æŒ‰éˆ•
-        public TextAsset[] inkAssets;  // å¤šå€‹ Inky åŠ‡æœ¬çš„é™£åˆ—ï¼ˆæ¯å€‹ NPC å¯ä»¥æœ‰å¤šå€‹åŠ‡æœ¬ï¼‰
+        public Text dialogText;  // Åã¥Ü¹ï¸Üªº Text
+        public Button[] buttons;  // ¥D¹ï¸Ü®Øªº¿ï¶µ«ö¶s
+        public TextAsset[] inkAssets;  // ¦h­Ó Inky ¼@¥»ªº°}¦C¡]¨C­Ó NPC ¥i¥H¦³¦h­Ó¼@¥»¡^
         public GameObject disappearui;
 
-        // åŸå…ˆçš„ Prefab
-        public GameObject characterDialogPrefab;  // "äººç‰©å°è©±ui(å¼·åŒ–ç‰ˆ)" prefab
-        public GameObject vendorIntroPrefab;  // "å» å•†èƒŒæ™¯ä»‹ç´¹ (1)" prefab
+        // ­ì¥ıªº Prefab
+        public GameObject characterDialogPrefab;  // "¤Hª«¹ï¸Üui(±j¤Æª©)" prefab
+        public GameObject vendorIntroPrefab;  // "¼t°Ó­I´º¤¶²Ğ (1)" prefab
 
-        // æ–°å¢ä¸‰å€‹Prefabå’Œä¸‰å€‹Text
-        public GameObject greenVitalPrefab;  // "GreenVital Foods" çš„Prefab
-        public GameObject elegancePrefab;    // "Elegance Accessories" çš„Prefab
-        public GameObject ecoEssentialsPrefab;  // "EcoEssentials" çš„Prefab
+        // ·s¼W¤T­ÓPrefab©M¤T­ÓText
+        public GameObject greenVitalPrefab;  // "GreenVital Foods" ªºPrefab
+        public GameObject elegancePrefab;    // "Elegance Accessories" ªºPrefab
+        public GameObject ecoEssentialsPrefab;  // "EcoEssentials" ªºPrefab
 
-        public Text greenVitalText;  // "GreenVital Foods" å°æ‡‰çš„Text
-        public Text eleganceText;    // "Elegance Accessories" å°æ‡‰çš„Text
-        public Text ecoEssentialsText;  // "EcoEssentials" å°æ‡‰çš„Text
+        public Text greenVitalText;  // "GreenVital Foods" ¹ïÀ³ªºText
+        public Text eleganceText;    // "Elegance Accessories" ¹ïÀ³ªºText
+        public Text ecoEssentialsText;  // "EcoEssentials" ¹ïÀ³ªºText
 
-        // ç‚ºæ¯å€‹å°è©±æ¡†æ–°å¢ä¸€çµ„æŒ‰éˆ•
-        public Button[] greenVitalButtons;   // GreenVital Foods çš„é¸é …æŒ‰éˆ•
-        public Button[] eleganceButtons;     // Elegance Accessories çš„é¸é …æŒ‰éˆ•
-        public Button[] ecoEssentialsButtons;  // EcoEssentials çš„é¸é …æŒ‰éˆ•
+        // ¬°¨C­Ó¹ï¸Ü®Ø·s¼W¤@²Õ«ö¶s
+        public Button[] greenVitalButtons;   // GreenVital Foods ªº¿ï¶µ«ö¶s
+        public Button[] eleganceButtons;     // Elegance Accessories ªº¿ï¶µ«ö¶s
+        public Button[] ecoEssentialsButtons;  // EcoEssentials ªº¿ï¶µ«ö¶s
 
         private Story story = null;
-        private List<string> dialogHistory = new List<string>();  // å°è©±æ­·å²ç´€éŒ„
-        private int currentDialogIndex = -1;  // ç•¶å‰å°è©±ç´¢å¼•
-        private int currentInkAssetIndex = 0;  // ç•¶å‰åŠ‡æœ¬ç´¢å¼•
+        private List<string> dialogHistory = new List<string>();  // ¹ï¸Ü¾ú¥v¬ö¿ı
+        private int currentDialogIndex = -1;  // ·í«e¹ï¸Ü¯Á¤Ş
+        private int currentInkAssetIndex = 0;  // ·í«e¼@¥»¯Á¤Ş
 
-        // æ–°å¢ä¸€å€‹äº‹ä»¶ä¾†é€šçŸ¥å°è©±æ›´æ–°
+        // ·s¼W¤@­Ó¨Æ¥ó¨Ó³qª¾¹ï¸Ü§ó·s
         public delegate void OnDialogUpdateHandler(Story story);
         public event OnDialogUpdateHandler OnDialogUpdate;
 
         void Start()
         {
-            // åˆå§‹åŒ–éš±è—æ‰€æœ‰æŒ‰éˆ•
+            // ªì©l¤ÆÁôÂÃ©Ò¦³«ö¶s
             for (int i = 0; i < buttons.Length; i++)
             {
                 buttons[i].gameObject.SetActive(false);
             }
 
-            // ä¸è¦éš±è— characterDialogPrefabï¼Œä¿æŒå®ƒåœ¨ä¸€é–‹å§‹é¡¯ç¤º
+            // ¤£­nÁôÂÃ characterDialogPrefab¡A«O«ù¥¦¦b¤@¶}©lÅã¥Ü
             HideAllPrefabsAndTextsExceptCharacterDialog();
 
             if (inkAssets.Length > 0)
             {
-                // é–‹å§‹ç¬¬ä¸€å€‹åŠ‡æœ¬
+                // ¶}©l²Ä¤@­Ó¼@¥»
                 StartDialog(inkAssets[currentInkAssetIndex]);
             }
         }
@@ -62,13 +61,13 @@ namespace MyProject.Dialogs
         {
             if (story != null)
             {
-                story = null;  // é‡ç½®æ•…äº‹å°è±¡
+                story = null;  // ­«¸m¬G¨Æ¹ï¶H
             }
 
-            story = new Story(inkAsset.text);  // åˆå§‹åŒ–æ–°çš„ Story
-            dialogHistory.Clear();  // æ¸…ç©ºå°è©±æ­·å²
-            currentDialogIndex = -1;  // é‡ç½®å°è©±ç´¢å¼•
-            NextDialog();  // é¡¯ç¤ºå°è©±
+            story = new Story(inkAsset.text);  // ªì©l¤Æ·sªº Story
+            dialogHistory.Clear();  // ²MªÅ¹ï¸Ü¾ú¥v
+            currentDialogIndex = -1;  // ­«¸m¹ï¸Ü¯Á¤Ş
+            NextDialog();  // Åã¥Ü¹ï¸Ü
             return true;
         }
 
@@ -76,55 +75,55 @@ namespace MyProject.Dialogs
         {
             if (story == null) return;
 
-            // å¦‚æœå°è©±å·²ç¶“çµæŸï¼Œä¸¦ä¸”æ²’æœ‰å¯é¸æ“‡çš„é¸é …ï¼Œå˜—è©¦åˆ‡æ›åˆ°ä¸‹ä¸€å€‹åŠ‡æœ¬
+            // ¦pªG¹ï¸Ü¤w¸gµ²§ô¡A¨Ã¥B¨S¦³¥i¿ï¾Üªº¿ï¶µ¡A¹Á¸Õ¤Á´«¨ì¤U¤@­Ó¼@¥»
             if (!story.canContinue && story.currentChoices.Count == 0)
             {
-                Debug.Log("åŠ‡æœ¬çµæŸã€‚");
+                Debug.Log("¼@¥»µ²§ô¡C");
 
-                // åˆ‡æ›åˆ°ä¸‹ä¸€å€‹åŠ‡æœ¬ï¼ˆå¦‚æœæœ‰ï¼‰
+                // ¤Á´«¨ì¤U¤@­Ó¼@¥»¡]¦pªG¦³¡^
                 currentInkAssetIndex++;
                 if (currentInkAssetIndex < inkAssets.Length)
                 {
                     disappearui.SetActive(false);
-                    Debug.Log("åˆ‡æ›åˆ°ä¸‹ä¸€å€‹åŠ‡æœ¬ã€‚");
-                    StartDialog(inkAssets[currentInkAssetIndex]);  // åŠ è¼‰ä¸‹ä¸€å€‹åŠ‡æœ¬
+                    Debug.Log("¤Á´«¨ì¤U¤@­Ó¼@¥»¡C");
+                    StartDialog(inkAssets[currentInkAssetIndex]);  // ¥[¸ü¤U¤@­Ó¼@¥»
                     return;
                 }
 
-                Debug.Log("æ‰€æœ‰åŠ‡æœ¬å·²å®Œæˆã€‚");
+                Debug.Log("©Ò¦³¼@¥»¤w§¹¦¨¡C");
                 return;
             }
 
-            // å¦‚æœé‚„æœ‰å°è©±å¯ä»¥ç¹¼çºŒ
+            // ¦pªGÁÙ¦³¹ï¸Ü¥i¥HÄ~Äò
             if (story.canContinue)
             {
                 string nextLine = story.Continue();
                 if (!string.IsNullOrWhiteSpace(nextLine))
                 {
-                    dialogHistory.Add(nextLine);  // å°‡å°è©±æ·»åŠ åˆ°æ­·å²
+                    dialogHistory.Add(nextLine);  // ±N¹ï¸Ü²K¥[¨ì¾ú¥v
                     currentDialogIndex = dialogHistory.Count - 1;
-                    dialogText.text = nextLine;  // é¡¯ç¤ºæ–°çš„å°è©±
+                    dialogText.text = nextLine;  // Åã¥Ü·sªº¹ï¸Ü
                 }
 
-                // åµæ¸¬æ¨™ç±¤ä¸¦æ±ºå®šæŒ‰éˆ•ç”Ÿæˆä½ç½®
-                if (story.currentTags.Contains("GreenVital Foodsä»£è¡¨"))
+                // °»´ú¼ĞÅÒ¨Ã¨M©w«ö¶s¥Í¦¨¦ì¸m
+                if (story.currentTags.Contains("GreenVital Foods¥Nªí"))
                 {
-                    // éš±è—ä¸»è¦å°è©±æ¡†çš„æŒ‰éˆ•ï¼Œä¸¦åœ¨ GreenVital çš„å°è©±æ¡†ç”Ÿæˆé¸é …
+                    // ÁôÂÃ¥D­n¹ï¸Ü®Øªº«ö¶s¡A¨Ã¦b GreenVital ªº¹ï¸Ü®Ø¥Í¦¨¿ï¶µ
                     ShowDialog(greenVitalPrefab, greenVitalText, nextLine, greenVitalButtons);
                 }
-                else if (story.currentTags.Contains("Elegance Accessoriesä»£è¡¨"))
+                else if (story.currentTags.Contains("Elegance Accessories¥Nªí"))
                 {
-                    // éš±è—ä¸»è¦å°è©±æ¡†çš„æŒ‰éˆ•ï¼Œä¸¦åœ¨ Elegance çš„å°è©±æ¡†ç”Ÿæˆé¸é …
+                    // ÁôÂÃ¥D­n¹ï¸Ü®Øªº«ö¶s¡A¨Ã¦b Elegance ªº¹ï¸Ü®Ø¥Í¦¨¿ï¶µ
                     ShowDialog(elegancePrefab, eleganceText, nextLine, eleganceButtons);
                 }
-                else if (story.currentTags.Contains("EcoEssentialsä»£è¡¨"))
+                else if (story.currentTags.Contains("EcoEssentials¥Nªí"))
                 {
-                    // éš±è—ä¸»è¦å°è©±æ¡†çš„æŒ‰éˆ•ï¼Œä¸¦åœ¨ EcoEssentials çš„å°è©±æ¡†ç”Ÿæˆé¸é …
+                    // ÁôÂÃ¥D­n¹ï¸Ü®Øªº«ö¶s¡A¨Ã¦b EcoEssentials ªº¹ï¸Ü®Ø¥Í¦¨¿ï¶µ
                     ShowDialog(ecoEssentialsPrefab, ecoEssentialsText, nextLine, ecoEssentialsButtons);
                 }
-                else if (story.currentTags.Contains("ç³»çµ±åˆ†æå¸«1"))
+                else if (story.currentTags.Contains("¨t²Î¤ÀªR®v1"))
                 {
-                    // éš±è—ä¸»è¦å°è©±æ¡†ï¼Œé¡¯ç¤º vendorIntroPrefab
+                    // ÁôÂÃ¥D­n¹ï¸Ü®Ø¡AÅã¥Ü vendorIntroPrefab
                     if (characterDialogPrefab != null)
                     {
                         characterDialogPrefab.SetActive(false);
@@ -132,43 +131,43 @@ namespace MyProject.Dialogs
 
                     if (vendorIntroPrefab != null)
                     {
-                        vendorIntroPrefab.SetActive(true);  // é¡¯ç¤º "å» å•†èƒŒæ™¯ä»‹ç´¹ (1)"
+                        vendorIntroPrefab.SetActive(true);  // Åã¥Ü "¼t°Ó­I´º¤¶²Ğ (1)"
                     }
                 }
                 else
                 {
-                    // æ²’æœ‰ä»£è¡¨æ¨™ç±¤ï¼Œå‰‡åœ¨ä¸»è¦å°è©±æ¡†ç”Ÿæˆé¸é …
+                    // ¨S¦³¥Nªí¼ĞÅÒ¡A«h¦b¥D­n¹ï¸Ü®Ø¥Í¦¨¿ï¶µ
                     ShowMainDialogButtons();
                 }
 
-                // ç™¼é€é€šçŸ¥ï¼Œè®“å…¶ä»–ç³»çµ±çŸ¥é“å°è©±æ›´æ–°äº†
+                // µo°e³qª¾¡AÅı¨ä¥L¨t²Îª¾¹D¹ï¸Ü§ó·s¤F
                 OnDialogUpdate?.Invoke(story);
 
-                // åœ¨æœ‰é¸é …çš„æƒ…æ³ä¸‹ï¼Œç”ŸæˆæŒ‰éˆ•
+                // ¦b¦³¿ï¶µªº±¡ªp¤U¡A¥Í¦¨«ö¶s
                 if (story.currentChoices.Count > 0)
                 {
-                    // å¦‚æœæœ‰ä»£è¡¨æ¨™ç±¤ï¼Œç”Ÿæˆå°æ‡‰ä»£è¡¨å°è©±æ¡†çš„é¸é …æŒ‰éˆ•
-                    if (story.currentTags.Contains("GreenVital Foodsä»£è¡¨"))
+                    // ¦pªG¦³¥Nªí¼ĞÅÒ¡A¥Í¦¨¹ïÀ³¥Nªí¹ï¸Ü®Øªº¿ï¶µ«ö¶s
+                    if (story.currentTags.Contains("GreenVital Foods¥Nªí"))
                     {
                         SetChoices(greenVitalButtons);
                     }
-                    else if (story.currentTags.Contains("Elegance Accessoriesä»£è¡¨"))
+                    else if (story.currentTags.Contains("Elegance Accessories¥Nªí"))
                     {
                         SetChoices(eleganceButtons);
                     }
-                    else if (story.currentTags.Contains("EcoEssentialsä»£è¡¨"))
+                    else if (story.currentTags.Contains("EcoEssentials¥Nªí"))
                     {
                         SetChoices(ecoEssentialsButtons);
                     }
                     else
                     {
-                        // æ²’æœ‰ä»£è¡¨æ¨™ç±¤æ™‚ï¼Œç”Ÿæˆä¸»è¦å°è©±æ¡†çš„é¸é …æŒ‰éˆ•
+                        // ¨S¦³¥Nªí¼ĞÅÒ®É¡A¥Í¦¨¥D­n¹ï¸Ü®Øªº¿ï¶µ«ö¶s
                         SetChoices(buttons);
                     }
                 }
                 else
                 {
-                    // æ²’æœ‰é¸é …æ™‚éš±è—æŒ‰éˆ•
+                    // ¨S¦³¿ï¶µ®ÉÁôÂÃ«ö¶s
                     HideMainDialogButtons();
                 }
             }
@@ -178,7 +177,7 @@ namespace MyProject.Dialogs
 
         private void HideMainDialogButtons()
         {
-            // éš±è—ä¸»è¦å°è©±æ¡†çš„æ‰€æœ‰é¸é …æŒ‰éˆ•
+            // ÁôÂÃ¥D­n¹ï¸Ü®Øªº©Ò¦³¿ï¶µ«ö¶s
             for (int i = 0; i < buttons.Length; i++)
             {
                 buttons[i].gameObject.SetActive(false);
@@ -187,19 +186,19 @@ namespace MyProject.Dialogs
 
         private void ShowMainDialogButtons()
         {
-            // é¡¯ç¤ºä¸»è¦å°è©±æ¡†çš„é¸é …æŒ‰éˆ•ï¼Œä¸¦è¨­ç½®é¸é …æ–‡æœ¬
+            // Åã¥Ü¥D­n¹ï¸Ü®Øªº¿ï¶µ«ö¶s¡A¨Ã³]¸m¿ï¶µ¤å¥»
             for (int i = 0; i < story.currentChoices.Count; i++)
             {
                 buttons[i].gameObject.SetActive(true);
                 buttons[i].GetComponentInChildren<Text>().text = story.currentChoices[i].text;
 
-                // ä½¿ç”¨å±€éƒ¨è®Šæ•¸æ•æ‰é¸é …ç´¢å¼•ï¼Œé¿å…é–‰åŒ…å•é¡Œ
+                // ¨Ï¥Î§½³¡ÅÜ¼Æ®·®»¿ï¶µ¯Á¤Ş¡AÁ×§K³¬¥]°İÃD
                 int choiceIndex = i;
                 buttons[i].onClick.RemoveAllListeners();
                 buttons[i].onClick.AddListener(() => MakeChoice(choiceIndex));
             }
 
-            // éš±è—å¤šé¤˜çš„æŒ‰éˆ•
+            // ÁôÂÃ¦h¾lªº«ö¶s
             for (int i = story.currentChoices.Count; i < buttons.Length; i++)
             {
                 buttons[i].gameObject.SetActive(false);
@@ -208,26 +207,26 @@ namespace MyProject.Dialogs
 
         private void SetChoices(Button[] buttons)
         {
-            // ç¢ºä¿ story.currentChoices çš„æ•¸é‡ä¸è¶…éæŒ‰éˆ•æ•¸é‡
+            // ½T«O story.currentChoices ªº¼Æ¶q¤£¶W¹L«ö¶s¼Æ¶q
             if (story.currentChoices.Count > buttons.Length)
             {
-                Debug.LogError("é¸é …æ•¸é‡è¶…éäº†å¯ç”¨æŒ‰éˆ•çš„æ•¸é‡ã€‚");
+                Debug.LogError("¿ï¶µ¼Æ¶q¶W¹L¤F¥i¥Î«ö¶sªº¼Æ¶q¡C");
                 return;
             }
 
-            // é¡¯ç¤ºå°æ‡‰çš„ä»£è¡¨æŒ‰éˆ•ï¼Œä¸¦è¨­ç½®é¸é …æ–‡æœ¬
+            // Åã¥Ü¹ïÀ³ªº¥Nªí«ö¶s¡A¨Ã³]¸m¿ï¶µ¤å¥»
             for (int i = 0; i < story.currentChoices.Count; i++)
             {
                 buttons[i].gameObject.SetActive(true);
                 buttons[i].GetComponentInChildren<Text>().text = story.currentChoices[i].text;
 
-                // ä½¿ç”¨å±€éƒ¨è®Šæ•¸æ•æ‰é¸é …ç´¢å¼•ï¼Œé¿å…é–‰åŒ…å•é¡Œ
+                // ¨Ï¥Î§½³¡ÅÜ¼Æ®·®»¿ï¶µ¯Á¤Ş¡AÁ×§K³¬¥]°İÃD
                 int choiceIndex = i;
                 buttons[i].onClick.RemoveAllListeners();
                 buttons[i].onClick.AddListener(() => MakeChoice(choiceIndex));
             }
 
-            // éš±è—å¤šé¤˜çš„æŒ‰éˆ•
+            // ÁôÂÃ¦h¾lªº«ö¶s
             for (int i = story.currentChoices.Count; i < buttons.Length; i++)
             {
                 buttons[i].gameObject.SetActive(false);
@@ -239,74 +238,74 @@ namespace MyProject.Dialogs
         {
             if (index >= 0 && index < story.currentChoices.Count)
             {
-                // é¸æ“‡ Ink æ•…äº‹ä¸­çš„é¸é …
+                // ¿ï¾Ü Ink ¬G¨Æ¤¤ªº¿ï¶µ
                 story.ChooseChoiceIndex(index);
 
-                // åˆ¤æ–·ç•¶å‰æ˜¯å¾ä»£è¡¨å°è©±æ¡†è¿”å›
+                // §PÂ_·í«e¬O±q¥Nªí¹ï¸Ü®Øªğ¦^
                 bool isRepresentativeDialogActive =
                     greenVitalPrefab.activeSelf || elegancePrefab.activeSelf || ecoEssentialsPrefab.activeSelf;
 
-                // éš±è—æ‰€æœ‰ä»£è¡¨å°è©±æ¡†
+                // ÁôÂÃ©Ò¦³¥Nªí¹ï¸Ü®Ø
                 HideAllPrefabsAndTexts();
 
-                // é¡¯ç¤ºä¸»è¦å°è©±æ¡†
+                // Åã¥Ü¥D­n¹ï¸Ü®Ø
                 if (characterDialogPrefab != null)
                 {
                     characterDialogPrefab.SetActive(true);
                 }
 
-                // èª¿ç”¨ä¸‹ä¸€æ®µå°è©±
-                NextDialog();  // å¸¸è¦å‘¼å«
+                // ½Õ¥Î¤U¤@¬q¹ï¸Ü
+                NextDialog();  // ±`³W©I¥s
 
-                // å¦‚æœä¹‹å‰æ˜¯åœ¨ä»£è¡¨å°è©±æ¡†ï¼Œå›åˆ°ä¸»è¦å°è©±æ¡†æ™‚å†èª¿ç”¨ä¸€æ¬¡ NextDialog
+                // ¦pªG¤§«e¬O¦b¥Nªí¹ï¸Ü®Ø¡A¦^¨ì¥D­n¹ï¸Ü®Ø®É¦A½Õ¥Î¤@¦¸ NextDialog
                 if (isRepresentativeDialogActive && characterDialogPrefab.activeSelf)
                 {
-                    NextDialog();  // é€²è¡Œåˆ°ä¸‹ä¸€æ®µï¼Œä¿è­‰å‰©é¤˜é¸é …æ­£ç¢ºé¡¯ç¤º
+                    NextDialog();  // ¶i¦æ¨ì¤U¤@¬q¡A«OÃÒ³Ñ¾l¿ï¶µ¥¿½TÅã¥Ü
                 }
             }
             else
             {
-                Debug.LogError("é¸é …ç´¢å¼•è¶…å‡ºç¯„åœ");
+                Debug.LogError("¿ï¶µ¯Á¤Ş¶W¥X½d³ò");
             }
         }
 
 
 
-        // åªéš±è—ä»£è¡¨å’ŒèƒŒæ™¯ä»‹ç´¹çš„ Prefabï¼Œä¿æŒäººç‰©å°è©±ui(å¼·åŒ–ç‰ˆ)é¡¯ç¤º
+        // ¥uÁôÂÃ¥Nªí©M­I´º¤¶²Ğªº Prefab¡A«O«ù¤Hª«¹ï¸Üui(±j¤Æª©)Åã¥Ü
         private void HideAllPrefabsAndTextsExceptCharacterDialog()
         {
-            // éš±è—æ‰€æœ‰ä»£è¡¨çš„Prefab
+            // ÁôÂÃ©Ò¦³¥NªíªºPrefab
             greenVitalPrefab.SetActive(false);
             elegancePrefab.SetActive(false);
             ecoEssentialsPrefab.SetActive(false);
 
-            // éš±è—å» å•†èƒŒæ™¯ä»‹ç´¹ Prefab
+            // ÁôÂÃ¼t°Ó­I´º¤¶²Ğ Prefab
             if (vendorIntroPrefab != null)
                 vendorIntroPrefab.SetActive(false);
 
-            // éš±è—æ‰€æœ‰ä»£è¡¨çš„Text
+            // ÁôÂÃ©Ò¦³¥NªíªºText
             greenVitalText.gameObject.SetActive(false);
             eleganceText.gameObject.SetActive(false);
             ecoEssentialsText.gameObject.SetActive(false);
         }
 
-        // éš±è—æ‰€æœ‰Prefabå’ŒTextï¼ŒåŒ…æ‹¬ "äººç‰©å°è©±ui(å¼·åŒ–ç‰ˆ)"
+        // ÁôÂÃ©Ò¦³Prefab©MText¡A¥]¬A "¤Hª«¹ï¸Üui(±j¤Æª©)"
         private void HideAllPrefabsAndTexts()
         {
-            // éš±è—æ‰€æœ‰ä»£è¡¨çš„Prefab
+            // ÁôÂÃ©Ò¦³¥NªíªºPrefab
             greenVitalPrefab.SetActive(false);
             elegancePrefab.SetActive(false);
             ecoEssentialsPrefab.SetActive(false);
 
-            // éš±è—åŸæœ‰çš„ "äººç‰©å°è©±ui(å¼·åŒ–ç‰ˆ)" Prefab
+            // ÁôÂÃ­ì¦³ªº "¤Hª«¹ï¸Üui(±j¤Æª©)" Prefab
             if (characterDialogPrefab != null)
                 characterDialogPrefab.SetActive(false);
 
-            // éš±è—å» å•†èƒŒæ™¯ä»‹ç´¹ Prefab
+            // ÁôÂÃ¼t°Ó­I´º¤¶²Ğ Prefab
             if (vendorIntroPrefab != null)
                 vendorIntroPrefab.SetActive(false);
 
-            // éš±è—æ‰€æœ‰ä»£è¡¨çš„Text
+            // ÁôÂÃ©Ò¦³¥NªíªºText
             greenVitalText.gameObject.SetActive(false);
             eleganceText.gameObject.SetActive(false);
             ecoEssentialsText.gameObject.SetActive(false);
@@ -319,20 +318,20 @@ namespace MyProject.Dialogs
 
         private void ShowDialog(GameObject prefab, Text text, string nextLine, Button[] buttons)
         {
-            // éš±è—ä¸»è¦å°è©±æ¡†çš„æŒ‰éˆ•
+            // ÁôÂÃ¥D­n¹ï¸Ü®Øªº«ö¶s
             HideMainDialogButtons();
 
-            // éš±è—æ‰€æœ‰çš„ä»£è¡¨å°è©±æ¡†å’Œæ–‡æœ¬
+            // ÁôÂÃ©Ò¦³ªº¥Nªí¹ï¸Ü®Ø©M¤å¥»
             HideAllPrefabsAndTexts();
 
-            // é¡¯ç¤ºå°æ‡‰çš„ä»£è¡¨å°è©±æ¡†å’Œæ–‡æœ¬
+            // Åã¥Ü¹ïÀ³ªº¥Nªí¹ï¸Ü®Ø©M¤å¥»
             prefab.SetActive(true);
             text.gameObject.SetActive(true);
 
-            // è¨­ç½®å°è©±æ–‡æœ¬
+            // ³]¸m¹ï¸Ü¤å¥»
             text.text = nextLine;
 
-            // é¡¯ç¤ºå°æ‡‰ä»£è¡¨çš„é¸é …æŒ‰éˆ•
+            // Åã¥Ü¹ïÀ³¥Nªíªº¿ï¶µ«ö¶s
             SetChoices(buttons);
         }
 
