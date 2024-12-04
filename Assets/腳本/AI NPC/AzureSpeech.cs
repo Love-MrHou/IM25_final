@@ -1,111 +1,140 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Microsoft.CognitiveServices.Speech;
+using CandyCoded.env;
+
 #if PLATFORM_ANDROID
 using UnityEngine.Android;
 #endif
 
+/// <summary>
+/// 使用 Azure 語音辨識的 Unity 腳本，支持 Android 和其他平台。
+/// 包括環境變數初始化、按鈕交互邏輯及麥克風許可權處理。
+/// </summary>
 public class AzureSpeech : MonoBehaviour
 {
-    // Hook up the two properties below with a Text and Button object in your UI.
+    [Header("UI Elements")]
+    [Tooltip("用於顯示語音辨識結果的文字元件")]
     public Text outputText;
+
+    [Tooltip("用於啟動語音辨識的按鈕元件")]
     public Button startRecoButton;
 
-    private object threadLocker = new object();
-    private bool waitingForReco;
-    private string message;
+    [Header("Environment Variable Names")]
+    [Tooltip("Azure 語音 API 的環境變數名稱")]
+    private string azureApiKeyName = "AZURE_API_KEY";
 
-    private bool micPermissionGranted = false;
+    [Tooltip("Azure 區域的環境變數名稱")]
+    private string azureRegionName = "AZURE_REGION";
 
-#if PLATFORM_ANDROID
-    // Required to manifest microphone permission, cf.
-    // https://docs.unity3d.com/Manual/android-manifest.html
-    private Microphone mic;
-#endif
+    private string azureApiKey; // 存儲從環境變數讀取的 Azure API 金鑰
+    private string azureRegion; // 存儲從環境變數讀取的 Azure 區域
+    private bool micPermissionGranted = false; // 是否授予麥克風許可權
 
-    public async void ButtonClick()
-    {
-        var config = SpeechConfig.FromSubscription("155998f0555f47ae9ad78430ef6491aa", "eastus");
-        config.SpeechRecognitionLanguage = "zh-TW";
-
-        using (var recognizer = new SpeechRecognizer(config)) // 使用指定的配置初始化語音辨識器
-        {
-            lock (threadLocker) // 鎖定多執行緒的共享資源，確保執行緒安全
-            {
-                waitingForReco = true; // 設置等待語音辨識的狀態為 true
-            }
-
-            // 調用語音辨識器進行一次語音辨識操作，並等待結果
-            var result = await recognizer.RecognizeOnceAsync().ConfigureAwait(false);
-
-            // 檢查語音辨識結果
-            string newMessage = string.Empty; // 用於存儲結果訊息
-            if (result.Reason == ResultReason.RecognizedSpeech) // 如果成功辨識語音
-            {
-                newMessage = result.Text; // 提取辨識到的語音文字
-            }
-            else if (result.Reason == ResultReason.NoMatch) // 如果語音未被成功辨識
-            {
-                newMessage = "NOMATCH: Speech could not be recognized."; // 提示無法辨識語音
-            }
-            else if (result.Reason == ResultReason.Canceled) // 如果語音辨識被取消
-            {
-                var cancellation = CancellationDetails.FromResult(result); // 提取取消的詳細資訊
-                newMessage = $"CANCELED: Reason={cancellation.Reason} ErrorDetails={cancellation.ErrorDetails}"; // 記錄取消原因和錯誤詳情
-            }
-
-            // 再次鎖定多執行緒的共享資源，更新訊息和狀態
-            lock (threadLocker)
-            {
-                message = newMessage; // 更新全域訊息變數，將結果存入
-                waitingForReco = false; // 設置等待語音辨識的狀態為 false，表示已完成
-            }
-        }
-    }
+    private object threadLocker = new object(); // 用於多執行緒同步的鎖
+    private bool waitingForReco = false; // 是否正在等待語音辨識完成
+    private string message = string.Empty; // 用於顯示的訊息
 
     void Start()
     {
-        if (outputText == null)
+        // 檢查並初始化環境變數
+        if (env.TryParseEnvironmentVariable(azureApiKeyName, out azureApiKey) &&
+            env.TryParseEnvironmentVariable(azureRegionName, out azureRegion))
         {
-            UnityEngine.Debug.LogError("outputText property is null! Assign a UI Text element to it.");
-        }
-        else if (startRecoButton == null)
-        {
-            message = "startRecoButton property is null! Assign a UI Button to it.";
-            UnityEngine.Debug.LogError(message);
+            Debug.Log($"成功讀取環境變數：{azureApiKeyName}={azureApiKey}, {azureRegionName}={azureRegion}");
         }
         else
         {
-            // Continue with normal initialization, Text and Button objects are present.
+            Debug.LogError($"環境變數 {azureApiKeyName} 或 {azureRegionName} 未設置或為空！");
+            return;
+        }
+
+        // 檢查 UI 元件是否綁定
+        if (outputText == null)
+        {
+            Debug.LogError("outputText 未綁定，請在 Inspector 中設置對應的 UI Text 元件！");
+            return;
+        }
+
+        if (startRecoButton == null)
+        {
+            Debug.LogError("startRecoButton 未綁定，請在 Inspector 中設置對應的 UI Button 元件！");
+            return;
+        }
+
+        // 添加按鈕點擊事件
+        startRecoButton.onClick.AddListener(ButtonClick);
 
 #if PLATFORM_ANDROID
-            // Request to use the microphone, cf.
-            // https://docs.unity3d.com/Manual/android-RequestingPermissions.html
-            message = "Waiting for mic permission";
-            if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
-            {
-                Permission.RequestUserPermission(Permission.Microphone);
-            }
+        // 請求麥克風許可權
+        if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+        {
+            Permission.RequestUserPermission(Permission.Microphone);
+            message = "正在請求麥克風許可權...";
+        }
 #else
-            micPermissionGranted = true;
-            //message = "Click button to recognize speech";
+        micPermissionGranted = true;
+        message = "點擊按鈕開始語音辨識";
 #endif
-            startRecoButton.onClick.AddListener(ButtonClick);
+    }
+
+    public async void ButtonClick()
+    {
+        // 配置 Azure 語音辨識
+        var config = SpeechConfig.FromSubscription(azureApiKey, azureRegion);
+        config.SpeechRecognitionLanguage = "zh-TW";
+
+        // 初始化語音辨識器
+        using (var recognizer = new SpeechRecognizer(config))
+        {
+            lock (threadLocker)
+            {
+                waitingForReco = true; // 設置等待辨識狀態
+            }
+
+            // 執行語音辨識並獲取結果
+            var result = await recognizer.RecognizeOnceAsync().ConfigureAwait(false);
+            string newMessage;
+
+            switch (result.Reason)
+            {
+                case ResultReason.RecognizedSpeech:
+                    newMessage = $"辨識成功：{result.Text}";
+                    break;
+                case ResultReason.NoMatch:
+                    newMessage = "未能辨識語音";
+                    break;
+                case ResultReason.Canceled:
+                    var cancellation = CancellationDetails.FromResult(result);
+                    newMessage = $"辨識取消：原因={cancellation.Reason}, 錯誤={cancellation.ErrorDetails}";
+                    break;
+                default:
+                    newMessage = "未知錯誤發生";
+                    break;
+            }
+
+            lock (threadLocker)
+            {
+                message = newMessage; // 更新顯示訊息
+                waitingForReco = false; // 辨識結束
+            }
         }
     }
 
     void Update()
     {
 #if PLATFORM_ANDROID
+        // 更新麥克風許可權狀態
         if (!micPermissionGranted && Permission.HasUserAuthorizedPermission(Permission.Microphone))
         {
             micPermissionGranted = true;
-            message = "Click button to recognize speech";
+            message = "點擊按鈕開始語音辨識";
         }
 #endif
 
         lock (threadLocker)
         {
+            // 更新 UI
             if (startRecoButton != null)
             {
                 startRecoButton.interactable = !waitingForReco && micPermissionGranted;

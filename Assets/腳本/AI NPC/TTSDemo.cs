@@ -2,100 +2,171 @@ using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Audio;
 using UnityEngine;
 using UnityEngine.UI;
+using CandyCoded.env;
+using System.Threading.Tasks;
+
 public class TTSDemo : MonoBehaviour
 {
-    public AudioSource audioSource;
-    public Text textUI;  // 用來顯示和儲存要轉換成語音的文字
+    [Header("UI Elements")]
+    [Tooltip("用於顯示並存放要轉換成語音的文字")]
+    public Text textUI;
 
-    private string previousText = "";
-    private string currentText = ""; // 用來儲存目前在Text UI中要轉換的文字
-    private SpeechSynthesizer synthesizer;
+    [Tooltip("用於播放合成語音的音頻源")]
+    public AudioSource audioSource;
+
+    [Header("Speech Configuration")]
+    [Tooltip("Azure 語音合成的聲音名稱，例如 zh-TW-HsiaoChenNeural")]
     public string speechSynthesisVoiceName;
+
+    [Header("Environment Variables")]
+    [Tooltip("Azure API 的環境變數名稱")]
+    private readonly string azureApiKeyName = "AZURE_API_KEY";
+
+    [Tooltip("Azure 地區的環境變數名稱")]
+    private readonly string azureRegionName = "AZURE_REGION";
+
+    private SpeechSynthesizer synthesizer; // Azure 語音合成器
+    private string previousText = ""; // 儲存前一次的文字
+    private string currentText = ""; // 儲存當前的文字
+
+    private object threadLocker = new object(); // 用於執行緒同步
 
     void Start()
     {
+        InitializeAzureSpeechAPI();
+
+        // 檢查 UI 元件
         if (textUI == null)
         {
-            Debug.LogError("Text UI is not assigned! Please assign a Text UI element.");
+            Debug.LogError("Text UI 未設置！請在 Inspector 中設置一個 Text 元件。");
         }
 
-        // 使用 PullAudioOutputStream 來控制音頻資料，不再直接播放
-        var config = SpeechConfig.FromSubscription("155998f0555f47ae9ad78430ef6491aa", "eastus");
-        config.SpeechSynthesisLanguage = "zh-CN";
-        config.SpeechSynthesisVoiceName = speechSynthesisVoiceName; // "zh-TW-HsiaoChenNeural"
+        if (audioSource == null)
+        {
+            Debug.LogError("AudioSource 未設置！請在 Inspector 中設置一個 AudioSource 元件。");
+        }
+    }
 
-        var audioConfig = AudioConfig.FromStreamOutput(new PullAudioOutputStream());
-        synthesizer = new SpeechSynthesizer(config, audioConfig);
+    /// <summary>
+    /// 初始化 Azure 語音合成 API。
+    /// </summary>
+    private void InitializeAzureSpeechAPI()
+    {
+        if (env.TryParseEnvironmentVariable(azureApiKeyName, out string azureApiKey) &&
+            env.TryParseEnvironmentVariable(azureRegionName, out string azureRegion))
+        {
+            var config = SpeechConfig.FromSubscription(azureApiKey, azureRegion);
+            config.SpeechSynthesisLanguage = "zh-CN";
+            config.SpeechSynthesisVoiceName = speechSynthesisVoiceName;
+
+            var audioConfig = AudioConfig.FromStreamOutput(new PullAudioOutputStream());
+            synthesizer = new SpeechSynthesizer(config, audioConfig);
+
+            Debug.Log("Azure Speech API 初始化成功！");
+        }
+        else
+        {
+            Debug.LogError($"環境變數 {azureApiKeyName} 或 {azureRegionName} 未設置或為空！");
+        }
     }
 
     void Update()
     {
-        // 如果Text UI中的文字和之前的文字不同，則進行語音合成
         if (textUI != null && textUI.text != previousText)
         {
-            currentText = textUI.text; // 將Text UI中的文字更新到currentText
-
-            // 如果當前語音正在播放，停止並中斷
-            if (audioSource.isPlaying)
+            lock (threadLocker)
             {
-                audioSource.Stop(); // 停止目前正在播放的音頻
+                currentText = textUI.text;
+
+                if (audioSource.isPlaying)
+                {
+                    audioSource.Stop(); // 停止正在播放的音頻
+                }
+
+                StopCurrentSpeechSynthesis(); // 停止當前語音合成
+                SynthesizeAndPlayText(currentText); // 合成並播放新語音
+
+                previousText = currentText; // 更新文字記錄
             }
-
-            // 如果正在進行語音合成，停止合成
-            StopCurrentSpeechSynthesis();
-
-            // 重新合成並播放新的語音
-            SynthesizeAndPlayText(currentText);
-            previousText = currentText; // 更新previousText
         }
     }
 
+    /// <summary>
+    /// 合成並播放文字。
+    /// </summary>
+    /// <param name="text">要合成的文字</param>
     public async void SynthesizeAndPlayText(string text)
     {
-        var result = await synthesizer.SpeakTextAsync(text); // 合成Text UI中的文字
-
-        if (result.Reason == ResultReason.SynthesizingAudioCompleted)
+        try
         {
-            var sampleCount = result.AudioData.Length / 2;
-            var audioData = new float[sampleCount];
-            for (var i = 0; i < sampleCount; ++i)
+            var result = await synthesizer.SpeakTextAsync(text);
+
+            if (result.Reason == ResultReason.SynthesizingAudioCompleted)
             {
-                audioData[i] = (short)(result.AudioData[i * 2 + 1] << 8 | result.AudioData[i * 2]) / 32768.0F;
+                Debug.Log("語音合成成功！");
+                PlaySynthesizedAudio(result.AudioData);
             }
-
-            var audioClip = AudioClip.Create("SynthesizedAudio", sampleCount, 1, 16000, false);
-            audioClip.SetData(audioData, 0);
-            audioSource.clip = audioClip;
-            audioSource.Play();
-
-            Debug.Log("語音合成成功！");
+            else if (result.Reason == ResultReason.Canceled)
+            {
+                var cancellation = SpeechSynthesisCancellationDetails.FromResult(result);
+                Debug.LogError($"語音合成被取消：{cancellation.ErrorDetails}");
+            }
         }
-        else if (result.Reason == ResultReason.Canceled)
+        catch (System.Exception ex)
         {
-            var cancellation = SpeechSynthesisCancellationDetails.FromResult(result);
-            Debug.LogError(cancellation.ErrorDetails);
+            Debug.LogError($"語音合成過程中發生錯誤：{ex.Message}");
         }
     }
 
-    // 停止當前語音合成的函數
+    /// <summary>
+    /// 將語音資料轉換為音頻並播放。
+    /// </summary>
+    /// <param name="audioData">語音合成的音頻資料</param>
+    private void PlaySynthesizedAudio(byte[] audioData)
+    {
+        var sampleCount = audioData.Length / 2;
+        var audioSamples = new float[sampleCount];
+
+        for (var i = 0; i < sampleCount; ++i)
+        {
+            audioSamples[i] = (short)(audioData[i * 2 + 1] << 8 | audioData[i * 2]) / 32768.0F;
+        }
+
+        var audioClip = AudioClip.Create("SynthesizedAudio", sampleCount, 1, 16000, false);
+        audioClip.SetData(audioSamples, 0);
+        audioSource.clip = audioClip;
+        audioSource.Play();
+    }
+
+    /// <summary>
+    /// 停止當前語音合成。
+    /// </summary>
     public void StopCurrentSpeechSynthesis()
     {
         if (synthesizer != null)
         {
-            synthesizer.StopSpeakingAsync().Wait(); // 停止目前的語音合成
+            synthesizer.StopSpeakingAsync().Wait();
         }
     }
 
-    // 用來更新Text UI中的文字的函數，當外部需要更新時可以調用此函數
+    /// <summary>
+    /// 更新 Text UI 的內容。
+    /// </summary>
+    /// <param name="newText">新的文字內容</param>
     public void UpdateTextUI(string newText)
     {
         if (textUI != null)
         {
-            textUI.text = newText; // 將Text UI中的文字更新
+            textUI.text = newText;
         }
         else
         {
-            Debug.LogError("Text UI is not assigned.");
+            Debug.LogError("Text UI 未設置！");
         }
+    }
+
+    private void OnDestroy()
+    {
+        synthesizer?.Dispose();
     }
 }
