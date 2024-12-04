@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
 namespace MyProject.Dialogs
 {
     public class Scene2_Script : MonoBehaviour

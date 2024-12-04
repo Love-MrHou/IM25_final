@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class meetingchoice : MonoBehaviour
+public class test : MonoBehaviour
 {
     public Text systemAnalystText;
     public Button systemAnalystButton1;
@@ -144,17 +144,25 @@ public class meetingchoice : MonoBehaviour
         };
 
         var buttonText = buttonToUse.GetComponentInChildren<Text>();
+
         buttonText.text = choiceText;
 
+        // 根據文字長度調整字型大小
         if (choiceText.Length > 30)
         {
-            buttonText.fontSize = 25; // 調整文字大小
+            buttonText.fontSize = 25; // 若文字長度超過30，調整字型大小為25
+        }
+        else
+        {
+            buttonText.fontSize = 30; // 若文字長度未超過30，恢復原本字型大小30
         }
 
         buttonToUse.gameObject.SetActive(true);
         buttonToUse.onClick.RemoveAllListeners();
         buttonToUse.onClick.AddListener(() => MakeChoice(choiceIndex));
     }
+
+
 
     public void MakeChoice(int index)
     {
