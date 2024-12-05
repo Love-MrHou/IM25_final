@@ -27,7 +27,6 @@ public class NPCInteraction : MonoBehaviour
     {
         if (other.CompareTag("Player"))  // 確保是相機進入範圍
         {
-            Debug.Log("animation");
             isPlayerInRange = true;  // 標記玩家在範圍內
             StartTalking(); // 切換為說話狀態
         }
