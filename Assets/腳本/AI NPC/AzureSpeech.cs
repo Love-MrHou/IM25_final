@@ -99,7 +99,7 @@ public class AzureSpeech : MonoBehaviour
             switch (result.Reason)
             {
                 case ResultReason.RecognizedSpeech:
-                    newMessage = $"辨識成功：{result.Text}";
+                    newMessage = $"{result.Text}";
                     break;
                 case ResultReason.NoMatch:
                     newMessage = "未能辨識語音";
