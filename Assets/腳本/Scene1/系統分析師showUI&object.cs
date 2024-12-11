@@ -23,6 +23,7 @@ public class ShowUIandObject : MonoBehaviour
     {
         if (other.CompareTag("Player")) // 确保只有玩家触发
         {
+            Canva.SetActive(true);
             exclamationMark.SetActive(false);
         }
     }
@@ -31,6 +32,7 @@ public class ShowUIandObject : MonoBehaviour
     {
         if (other.CompareTag("Player")) // 确保只有玩家触发
         {
+            Canva.SetActive(false);
             exclamationMark.SetActive(true);
         }
     }

@@ -109,7 +109,7 @@ public class TTSDemo : MonoBehaviour
             else if (result.Reason == ResultReason.Canceled)
             {
                 var cancellation = SpeechSynthesisCancellationDetails.FromResult(result);
-                Debug.LogWarning($"語音合成被取消：{cancellation.ErrorDetails}");
+                Debug.LogError($"語音合成被取消：{cancellation.ErrorDetails}");
             }
         }
         catch (System.Exception ex)

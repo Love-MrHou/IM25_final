@@ -4,7 +4,7 @@
 根據數據分析，這個年齡段的用戶佔據了我們社交媒體粉絲群體的65%，而且他們的互動率和購買力最高。這群體對科技產品的接受度和忠誠度也較高，如果能打入這個市場，我們的品牌價值和市場份額將顯著提升。#市場部經理
 了解。那麼在內容創作上，我們計劃如何讓這些受眾感受到產品的創新性和高性能？產品部和設計部有什麼具體建議嗎？#系統分析師
 這樣的策略看起來很有潛力。我們還需考慮如何通過創意提高受眾參與度，特別是如何讓他們與廣告互動，以最大化轉化率和品牌影響力。這也是選擇合作廠商時必須考慮的關鍵因素。#市場部經理
-我們接下來需要討論一下可能的合作廠商，並深入分析他們各自的優勢和挑戰。最終的目標是找到一個能夠與我們品牌高度契合，並且能迅速推動我們市場目標的合作夥伴。#系統分析師
+接下來我們需要分析合作廠商他們各自的優勢和挑戰。最終的目標是找到一個能夠與我們品牌高度契合，並能迅速推動我們市場目標的合作夥伴。#系統分析師
 ->analysis
 VAR choiceA1_done = false
 VAR choiceA2_done = false
@@ -194,9 +194,9 @@ VAR choiceC5_done = false
 現在我們已經了解了各個廠商的需求和預算。讓我們來討論一下，選擇最符合我們公司預算要求的合作廠商。我們的預算是150,000美元，並且我們希望達成以下目標：提高品牌知名度、增加社交媒體互動以及推動銷售增長。#系統分析師
 根據我們的預算和目標，哪一家公司最符合我們的要求？#市場部經理
 
-*[GreenVital Foods，專注於健康食品，有100,000美元的預算，目標是六個月內提升品牌認知度20%] -> companyA1Chosen
-*[Elegance Accessories，專注於高端時尚配件，有150,000美元的預算，目標是三個月內提高線上銷售量10%] -> companyB1Chosen
-*[EcoEssentials，專注於環保產品，有70,000美元的預算，目標是五個月內提升品牌忠誠度20%] -> companyC1Chosen
+*[GreenVital Foods，專注於健康食品，有100,000美元的預算] -> companyA1Chosen
+*[Elegance Accessories，專注於高端時尚配件，有150,000美元的預算] -> companyB1Chosen
+*[EcoEssentials，專注於環保產品，有70,000美元的預算] -> companyC1Chosen
 
 === companyA1Chosen ===
 GreenVital Foods確實符合我們提升品牌認知度的目標，並且他們的預算也較為合理。不過，他們的預算僅為100,000美元，這可能限制我們在廣告創意和影響者合作上的靈活性，且目標時間較長，不利於短期內見效。#市場部經理
@@ -221,9 +221,9 @@ EcoEssentials的環保產品有潛力，但他們的預算只有70,000美元，�
 === summaryAndAnalysis2 ===
 我們的目標客群是18-34歲，對科技和時尚特別感興趣。現在要決定與哪家廠商合作，才能最佳吸引這些用戶。#系統分析師
 根據我們的客群需求，哪一家公司最符合我們的需求?#市場部經理
-*[GreenVital Foods，專注於健康食品，目標客群是18-35歲之間對健康食品有興趣的年輕人] -> companyA2Chosen
-*[Elegance Accessories，專注於高端時尚配件，目標客群是25-35歲之間關注時尚和生活品質的女性] -> companyB2Chosen
-*[EcoEssentials，專注於環保產品，目標客群是25-45歲之間注重環保和可持續生活方式的消費者] -> companyC2Chosen
+*[GreenVital Foods 目標客群是18-35歲之間對健康食品有興趣的年輕人] -> companyA2Chosen
+*[Elegance Accessories 目標客群是25-35歲之間關注時尚的女性] -> companyB2Chosen
+*[EcoEssentials，專注於環保產品，目標客群是25-45歲之間注重環保的消費者] -> companyC2Chosen
 
 === companyA2Chosen ===
 GreenVital Foods的客群與我們有重疊，但他們專注健康食品，與科技和時尚不完全契合。#市場部經理
@@ -248,9 +248,9 @@ EcoEssentials的客群偏向25-45歲，專注於環保產品。雖然環保是�
 我們要選擇一個能強化品牌形象並提升市場影響力的合作夥伴，現在我們來分析GreenVital Foods、Elegance Accessories、EcoEssentials公司，看看哪家公司最符合我們的需求。#系統分析師
 根據我們的品牌定位和市場目標，哪一家公司最能幫助我們達成這些目標？#市場部經理
 
-*[GreenVital Foods，專注於健康食品，目標是提升品牌知名度，特別是在年輕消費群體中] -> companyA3Chosen
-*[Elegance Accessories，專注於高端時尚配件，目標是吸引高端消費者，提升品牌在高端市場的形象] -> companyB3Chosen
-*[EcoEssentials，專注於環保產品，目標是強化綠色形象，吸引注重環保的消費者] -> companyC3Chosen
+*[GreenVital Foods 目標是提升品牌知名度，特別是在年輕消費群體中] -> companyA3Chosen
+*[Elegance Accessories 目標是吸引高端消費者，提升品牌在高端市場的形象] -> companyB3Chosen
+*[EcoEssentials 目標是強化綠色形象，吸引注重環保的消費者] -> companyC3Chosen
 
 === companyA3Chosen ===
 GreenVital Foods專注於健康食品，目標是提升品牌知名度，特別是在年輕群體中。這與我們的目標有重疊，但A公司的品牌定位偏向健康與自然，不完全符合我們的高科技或時尚形象。#市場部經理
