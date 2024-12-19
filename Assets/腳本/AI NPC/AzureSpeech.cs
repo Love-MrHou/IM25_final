@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using Microsoft.CognitiveServices.Speech;
 using CandyCoded.env;
 
-
 /// <summary>
 /// 使用 Azure 語音辨識的 Unity 腳本，支持 Android 和其他平台。
 /// 包括環境變數初始化、按鈕交互邏輯及麥克風許可權處理。
@@ -59,14 +58,38 @@ public class AzureSpeech : MonoBehaviour
             return;
         }
 
+        // 檢查麥克風權限
+        RequestMicPermission();
+
         // 添加按鈕點擊事件
         startRecoButton.onClick.AddListener(ButtonClick);
+    }
 
+    private void RequestMicPermission()
+    {
+        // 檢查是否授予麥克風權限
+        micPermissionGranted = Application.HasUserAuthorization(UserAuthorization.Microphone);
+        if (!micPermissionGranted)
+        {
+            Debug.LogWarning("未授予麥克風權限，嘗試請求權限...");
+            Application.RequestUserAuthorization(UserAuthorization.Microphone);
+            micPermissionGranted = Application.HasUserAuthorization(UserAuthorization.Microphone);
+        }
 
+        if (!micPermissionGranted)
+        {
+            Debug.LogError("用戶未授予麥克風權限，語音辨識功能將無法使用！");
+        }
     }
 
     public async void ButtonClick()
     {
+        if (!micPermissionGranted)
+        {
+            Debug.LogError("按鈕被點擊，但麥克風權限尚未授予！");
+            return;
+        }
+
         // 配置 Azure 語音辨識
         var config = SpeechConfig.FromSubscription(azureApiKey, azureRegion);
         config.SpeechRecognitionLanguage = "zh-TW";
@@ -79,6 +102,8 @@ public class AzureSpeech : MonoBehaviour
                 waitingForReco = true; // 設置等待辨識狀態
             }
 
+            Debug.Log("開始語音辨識...");
+
             // 執行語音辨識並獲取結果
             var result = await recognizer.RecognizeOnceAsync().ConfigureAwait(false);
             string newMessage;
@@ -86,7 +111,7 @@ public class AzureSpeech : MonoBehaviour
             switch (result.Reason)
             {
                 case ResultReason.RecognizedSpeech:
-                    newMessage = $"{result.Text}";
+                    newMessage = $"辨識成功：{result.Text}";
                     break;
                 case ResultReason.NoMatch:
                     newMessage = "未能辨識語音";
@@ -100,6 +125,8 @@ public class AzureSpeech : MonoBehaviour
                     break;
             }
 
+            Debug.Log($"辨識結果：{newMessage}");
+
             lock (threadLocker)
             {
                 message = newMessage; // 更新顯示訊息
@@ -110,14 +137,16 @@ public class AzureSpeech : MonoBehaviour
 
     void Update()
     {
-
         lock (threadLocker)
         {
-            // 更新 UI
+            // 更新按鈕狀態
             if (startRecoButton != null)
             {
                 startRecoButton.interactable = !waitingForReco && micPermissionGranted;
+                Debug.Log($"按鈕狀態更新：interactable = {!waitingForReco && micPermissionGranted}");
             }
+
+            // 更新顯示文字
             if (outputText != null)
             {
                 outputText.text = message;
