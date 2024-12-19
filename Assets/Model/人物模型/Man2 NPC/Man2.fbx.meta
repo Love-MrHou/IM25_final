@@ -8,27 +8,27 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Man2_AvatarBody
-    second: {fileID: 2100000, guid: 4fbfd569ae4013e46be3db409c8d8def, type: 2}
+    second: {fileID: 2100000, guid: 007a51aa82bf4b145b3affdf8920554e, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Man2_AvatarHead
-    second: {fileID: 2100000, guid: b8f1582f3f434c640ae0da4c408df494, type: 2}
+    second: {fileID: 2100000, guid: 5ee89b6bf04d62c4487c35a9ca1ec8fc, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Man2_AvatarLeftCornea
-    second: {fileID: 2100000, guid: 8ea8e0e6dbb00ed4c9545f2a3112d596, type: 2}
+    second: {fileID: 2100000, guid: fc3b01dcd8043b64db595aa98850bf19, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Man2_AvatarRightCornea
-    second: {fileID: 2100000, guid: 35e565395234a1c498d309c19772ff33, type: 2}
+    second: {fileID: 2100000, guid: 9e7eaa9e0a37c0844ade7fa10dd7e83a, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Man2_outfit
-    second: {fileID: 2100000, guid: 726128042dd78464a8d70086b1b390a7, type: 2}
+    second: {fileID: 2100000, guid: c45a4e6fb31432344888512ab7ac5ff0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

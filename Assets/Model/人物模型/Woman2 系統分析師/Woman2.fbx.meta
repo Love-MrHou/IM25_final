@@ -3,7 +3,32 @@ guid: b2b2f7fd9f9c54943bfebaff8aa0e61a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Woman2_AvatarBody
+    second: {fileID: 2100000, guid: 355d19d31bbc93145b46b2493ff9763e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Woman2_AvatarHead
+    second: {fileID: 2100000, guid: 1f8ca96046428d14480cdeeec3477e41, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Woman2_AvatarLeftCornea
+    second: {fileID: 2100000, guid: 4bd50cc71dec3a44fb8e944e8fbc71a2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Woman2_AvatarRightCornea
+    second: {fileID: 2100000, guid: 1114fb879b452554280af2fa6a78fde8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Woman2_outfit
+    second: {fileID: 2100000, guid: a381ab95f2c8a134da84bb104edd6346, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -133,7 +133,6 @@ GameObject:
   - component: {fileID: 6724273738260957323}
   - component: {fileID: 7439699769112026078}
   - component: {fileID: 227310819136527619}
-  - component: {fileID: 5467549401230845247}
   m_Layer: 5
   m_Name: "\u7AF6\u54C1\u5206\u6790-\u6D41\u7A0B"
   m_TagString: Untagged
@@ -224,27 +223,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5467549401230845247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 335185869317036510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e9ba47406852164f8c56469c14fc545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sprites:
-  - {fileID: 21300000, guid: 90e6ed7df8f860d4b8540b6d7857bfbb, type: 3}
-  - {fileID: 21300000, guid: dcd1a719eeeadad4d803b9562105d091, type: 3}
-  - {fileID: 21300000, guid: 402b20d547148264fadab0784f0aa6dd, type: 3}
-  - {fileID: 21300000, guid: cb5a3d8e48aa8f74fb23d23eab26ad35, type: 3}
-  imageDisplay: {fileID: 8882570111827901837}
-  nextButton: {fileID: 0}
-  currentCanvas: {fileID: 6724273738260957323}
-  additionalCanvas: {fileID: 80598958165881124}
 --- !u!1 &1537160215061220828
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,7 +730,6 @@ GameObject:
   - component: {fileID: 4935056090642486997}
   - component: {fileID: 8232949621171063298}
   - component: {fileID: 6193124077292136668}
-  - component: {fileID: 6688766176498418276}
   m_Layer: 5
   m_Name: "footbook\u700F\u89BD\u756B\u9762"
   m_TagString: Untagged
@@ -845,20 +822,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6688766176498418276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4421299385958341415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb65f20394d6f9b46bac6aa17cbb9146, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  yourButton: {fileID: 8972103601333733524}
-  imageToToggle: {fileID: 80076038364034507}
 --- !u!1 &4589653191507915722
 GameObject:
   m_ObjectHideFlags: 0
@@ -1334,7 +1297,6 @@ GameObject:
   - component: {fileID: 80598958165881124}
   - component: {fileID: 1045273609234060106}
   - component: {fileID: 5211659511040440265}
-  - component: {fileID: 8623540388194796343}
   m_Layer: 5
   m_Name: "\u7AF6\u54C1\u5206\u6790-\u793E\u4EA4\u754C\u9762"
   m_TagString: Untagged
@@ -1430,24 +1392,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8623540388194796343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5401793328601323154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbb416bc8b9c08646b979021fd93b509, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  footbook: {fileID: 1902535024642472436}
-  instragrum: {fileID: 476406146830933183}
-  xwitter: {fileID: 5985942241846230584}
-  footbook_C: {fileID: 4935056090642486997}
-  instragrum_C: {fileID: 4142360136976614803}
-  xwitter_C: {fileID: 1418401866421164494}
 --- !u!1 &5519938800029267893
 GameObject:
   m_ObjectHideFlags: 0
@@ -1581,7 +1525,6 @@ GameObject:
   - component: {fileID: 4142360136976614803}
   - component: {fileID: 2699605183500639512}
   - component: {fileID: 2381846018313313210}
-  - component: {fileID: 1530755263235090799}
   m_Layer: 5
   m_Name: "Instragrum\u700F\u89BD\u756B\u9762 "
   m_TagString: Untagged
@@ -1674,20 +1617,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1530755263235090799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530007184992136183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb65f20394d6f9b46bac6aa17cbb9146, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  yourButton: {fileID: 329055035593944501}
-  imageToToggle: {fileID: 6105990263457265035}
 --- !u!1 &5730792655194066067
 GameObject:
   m_ObjectHideFlags: 0
@@ -2627,7 +2556,6 @@ GameObject:
   - component: {fileID: 1418401866421164494}
   - component: {fileID: 8468728533290535960}
   - component: {fileID: 4565940463451361828}
-  - component: {fileID: 4602917426362899819}
   m_Layer: 5
   m_Name: "xwitter\u700F\u89BD\u756B\u9762"
   m_TagString: Untagged
@@ -2720,17 +2648,3 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &4602917426362899819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8995914605155467079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb65f20394d6f9b46bac6aa17cbb9146, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  yourButton: {fileID: 5366806219962447874}
-  imageToToggle: {fileID: 268979648259867186}

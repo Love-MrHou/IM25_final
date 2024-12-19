@@ -1,144 +1,152 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using Microsoft.CognitiveServices.Speech;
 using CandyCoded.env;
 
-#if PLATFORM_ANDROID
-using UnityEngine.Android;
-#endif
-
 /// <summary>
-/// ¨Ï¥Î Azure »y­µ¿ëÃÑªº Unity ¸}¥»¡A¤ä«ù Android ©M¨ä¥L¥­¥x¡C
-/// ¥]¬AÀô¹ÒÅÜ¼Æªì©l¤Æ¡B«ö¶s¥æ¤¬ÅŞ¿è¤Î³Á§J­·³\¥iÅv³B²z¡C
+/// ä½¿ç”¨ Azure èªéŸ³è¾¨è­˜çš„ Unity è…³æœ¬ï¼Œæ”¯æŒ Android å’Œå…¶ä»–å¹³å°ã€‚
+/// åŒ…æ‹¬ç’°å¢ƒè®Šæ•¸åˆå§‹åŒ–ã€æŒ‰éˆ•äº¤äº’é‚è¼¯åŠéº¥å…‹é¢¨è¨±å¯æ¬Šè™•ç†ã€‚
 /// </summary>
 public class AzureSpeech : MonoBehaviour
 {
     [Header("UI Elements")]
-    [Tooltip("¥Î©óÅã¥Ü»y­µ¿ëÃÑµ²ªGªº¤å¦r¤¸¥ó")]
+    [Tooltip("ç”¨æ–¼é¡¯ç¤ºèªéŸ³è¾¨è­˜çµæœçš„æ–‡å­—å…ƒä»¶")]
     public Text outputText;
 
-    [Tooltip("¥Î©ó±Ò°Ê»y­µ¿ëÃÑªº«ö¶s¤¸¥ó")]
+    [Tooltip("ç”¨æ–¼å•Ÿå‹•èªéŸ³è¾¨è­˜çš„æŒ‰éˆ•å…ƒä»¶")]
     public Button startRecoButton;
 
     [Header("Environment Variable Names")]
-    [Tooltip("Azure »y­µ API ªºÀô¹ÒÅÜ¼Æ¦WºÙ")]
+    [Tooltip("Azure èªéŸ³ API çš„ç’°å¢ƒè®Šæ•¸åç¨±")]
     private string azureApiKeyName = "AZURE_API_KEY";
 
-    [Tooltip("Azure °Ï°ìªºÀô¹ÒÅÜ¼Æ¦WºÙ")]
+    [Tooltip("Azure å€åŸŸçš„ç’°å¢ƒè®Šæ•¸åç¨±")]
     private string azureRegionName = "AZURE_REGION";
 
-    private string azureApiKey; // ¦sÀx±qÀô¹ÒÅÜ¼ÆÅª¨úªº Azure API ª÷Æ_
-    private string azureRegion; // ¦sÀx±qÀô¹ÒÅÜ¼ÆÅª¨úªº Azure °Ï°ì
-    private bool micPermissionGranted = false; // ¬O§_±Â¤©³Á§J­·³\¥iÅv
+    private string azureApiKey; // å­˜å„²å¾ç’°å¢ƒè®Šæ•¸è®€å–çš„ Azure API é‡‘é‘°
+    private string azureRegion; // å­˜å„²å¾ç’°å¢ƒè®Šæ•¸è®€å–çš„ Azure å€åŸŸ
+    private bool micPermissionGranted = false; // æ˜¯å¦æˆäºˆéº¥å…‹é¢¨è¨±å¯æ¬Š
 
-    private object threadLocker = new object(); // ¥Î©ó¦h°õ¦æºü¦P¨BªºÂê
-    private bool waitingForReco = false; // ¬O§_¥¿¦bµ¥«İ»y­µ¿ëÃÑ§¹¦¨
-    private string message = string.Empty; // ¥Î©óÅã¥Üªº°T®§
+    private object threadLocker = new object(); // ç”¨æ–¼å¤šåŸ·è¡Œç·’åŒæ­¥çš„é–
+    private bool waitingForReco = false; // æ˜¯å¦æ­£åœ¨ç­‰å¾…èªéŸ³è¾¨è­˜å®Œæˆ
+    private string message = string.Empty; // ç”¨æ–¼é¡¯ç¤ºçš„è¨Šæ¯
 
     void Start()
     {
-        // ÀË¬d¨Ãªì©l¤ÆÀô¹ÒÅÜ¼Æ
+        // æª¢æŸ¥ä¸¦åˆå§‹åŒ–ç’°å¢ƒè®Šæ•¸
         if (env.TryParseEnvironmentVariable(azureApiKeyName, out azureApiKey) &&
             env.TryParseEnvironmentVariable(azureRegionName, out azureRegion))
         {
-            Debug.Log($"¦¨¥\Åª¨úÀô¹ÒÅÜ¼Æ¡G{azureApiKeyName}={azureApiKey}, {azureRegionName}={azureRegion}");
+            Debug.Log($"æˆåŠŸè®€å–ç’°å¢ƒè®Šæ•¸ï¼š{azureApiKeyName}={azureApiKey}, {azureRegionName}={azureRegion}");
         }
         else
         {
-            Debug.LogError($"Àô¹ÒÅÜ¼Æ {azureApiKeyName} ©Î {azureRegionName} ¥¼³]¸m©Î¬°ªÅ¡I");
+            Debug.LogError($"ç’°å¢ƒè®Šæ•¸ {azureApiKeyName} æˆ– {azureRegionName} æœªè¨­ç½®æˆ–ç‚ºç©ºï¼");
             return;
         }
 
-        // ÀË¬d UI ¤¸¥ó¬O§_¸j©w
+        // æª¢æŸ¥ UI å…ƒä»¶æ˜¯å¦ç¶å®š
         if (outputText == null)
         {
-            Debug.LogError("outputText ¥¼¸j©w¡A½Ğ¦b Inspector ¤¤³]¸m¹ïÀ³ªº UI Text ¤¸¥ó¡I");
+            Debug.LogError("outputText æœªç¶å®šï¼Œè«‹åœ¨ Inspector ä¸­è¨­ç½®å°æ‡‰çš„ UI Text å…ƒä»¶ï¼");
             return;
         }
 
         if (startRecoButton == null)
         {
-            Debug.LogError("startRecoButton ¥¼¸j©w¡A½Ğ¦b Inspector ¤¤³]¸m¹ïÀ³ªº UI Button ¤¸¥ó¡I");
+            Debug.LogError("startRecoButton æœªç¶å®šï¼Œè«‹åœ¨ Inspector ä¸­è¨­ç½®å°æ‡‰çš„ UI Button å…ƒä»¶ï¼");
             return;
         }
 
-        // ²K¥[«ö¶sÂIÀ»¨Æ¥ó
-        startRecoButton.onClick.AddListener(ButtonClick);
+        // æª¢æŸ¥éº¥å…‹é¢¨æ¬Šé™
+        RequestMicPermission();
 
-#if PLATFORM_ANDROID
-        // ½Ğ¨D³Á§J­·³\¥iÅv
-        if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+        // æ·»åŠ æŒ‰éˆ•é»æ“Šäº‹ä»¶
+        startRecoButton.onClick.AddListener(ButtonClick);
+    }
+
+    private void RequestMicPermission()
+    {
+        // æª¢æŸ¥æ˜¯å¦æˆäºˆéº¥å…‹é¢¨æ¬Šé™
+        micPermissionGranted = Application.HasUserAuthorization(UserAuthorization.Microphone);
+        if (!micPermissionGranted)
         {
-            Permission.RequestUserPermission(Permission.Microphone);
-            message = "¥¿¦b½Ğ¨D³Á§J­·³\¥iÅv...";
+            Debug.LogWarning("æœªæˆäºˆéº¥å…‹é¢¨æ¬Šé™ï¼Œå˜—è©¦è«‹æ±‚æ¬Šé™...");
+            Application.RequestUserAuthorization(UserAuthorization.Microphone);
+            micPermissionGranted = Application.HasUserAuthorization(UserAuthorization.Microphone);
         }
-#else
-        micPermissionGranted = true;
-        message = "ÂIÀ»«ö¶s¶}©l»y­µ¿ëÃÑ";
-#endif
+
+        if (!micPermissionGranted)
+        {
+            Debug.LogError("ç”¨æˆ¶æœªæˆäºˆéº¥å…‹é¢¨æ¬Šé™ï¼ŒèªéŸ³è¾¨è­˜åŠŸèƒ½å°‡ç„¡æ³•ä½¿ç”¨ï¼");
+        }
     }
 
     public async void ButtonClick()
     {
-        // °t¸m Azure »y­µ¿ëÃÑ
+        if (!micPermissionGranted)
+        {
+            Debug.LogError("æŒ‰éˆ•è¢«é»æ“Šï¼Œä½†éº¥å…‹é¢¨æ¬Šé™å°šæœªæˆäºˆï¼");
+            return;
+        }
+
+        // é…ç½® Azure èªéŸ³è¾¨è­˜
         var config = SpeechConfig.FromSubscription(azureApiKey, azureRegion);
         config.SpeechRecognitionLanguage = "zh-TW";
 
-        // ªì©l¤Æ»y­µ¿ëÃÑ¾¹
+        // åˆå§‹åŒ–èªéŸ³è¾¨è­˜å™¨
         using (var recognizer = new SpeechRecognizer(config))
         {
             lock (threadLocker)
             {
-                waitingForReco = true; // ³]¸mµ¥«İ¿ëÃÑª¬ºA
+                waitingForReco = true; // è¨­ç½®ç­‰å¾…è¾¨è­˜ç‹€æ…‹
             }
 
-            // °õ¦æ»y­µ¿ëÃÑ¨ÃÀò¨úµ²ªG
+            Debug.Log("é–‹å§‹èªéŸ³è¾¨è­˜...");
+
+            // åŸ·è¡ŒèªéŸ³è¾¨è­˜ä¸¦ç²å–çµæœ
             var result = await recognizer.RecognizeOnceAsync().ConfigureAwait(false);
             string newMessage;
 
             switch (result.Reason)
             {
                 case ResultReason.RecognizedSpeech:
-                    newMessage = $"¿ëÃÑ¦¨¥\¡G{result.Text}";
+                    newMessage = $"ï¼š{result.Text}";
                     break;
                 case ResultReason.NoMatch:
-                    newMessage = "¥¼¯à¿ëÃÑ»y­µ";
+                    newMessage = "æœªèƒ½è¾¨è­˜èªéŸ³";
                     break;
                 case ResultReason.Canceled:
                     var cancellation = CancellationDetails.FromResult(result);
-                    newMessage = $"¿ëÃÑ¨ú®ø¡G­ì¦]={cancellation.Reason}, ¿ù»~={cancellation.ErrorDetails}";
+                    newMessage = $"è¾¨è­˜å–æ¶ˆï¼šåŸå› ={cancellation.Reason}, éŒ¯èª¤={cancellation.ErrorDetails}";
                     break;
                 default:
-                    newMessage = "¥¼ª¾¿ù»~µo¥Í";
+                    newMessage = "æœªçŸ¥éŒ¯èª¤ç™¼ç”Ÿ";
                     break;
             }
 
+            Debug.Log($"è¾¨è­˜çµæœï¼š{newMessage}");
+
             lock (threadLocker)
             {
-                message = newMessage; // §ó·sÅã¥Ü°T®§
-                waitingForReco = false; // ¿ëÃÑµ²§ô
+                message = newMessage; // æ›´æ–°é¡¯ç¤ºè¨Šæ¯
+                waitingForReco = false; // è¾¨è­˜çµæŸ
             }
         }
     }
 
     void Update()
     {
-#if PLATFORM_ANDROID
-        // §ó·s³Á§J­·³\¥iÅvª¬ºA
-        if (!micPermissionGranted && Permission.HasUserAuthorizedPermission(Permission.Microphone))
-        {
-            micPermissionGranted = true;
-            message = "ÂIÀ»«ö¶s¶}©l»y­µ¿ëÃÑ";
-        }
-#endif
-
         lock (threadLocker)
         {
-            // §ó·s UI
+            // æ›´æ–°æŒ‰éˆ•ç‹€æ…‹
             if (startRecoButton != null)
             {
                 startRecoButton.interactable = !waitingForReco && micPermissionGranted;
+                Debug.Log($"æŒ‰éˆ•ç‹€æ…‹æ›´æ–°ï¼šinteractable = {!waitingForReco && micPermissionGranted}");
             }
+
+            // æ›´æ–°é¡¯ç¤ºæ–‡å­—
             if (outputText != null)
             {
                 outputText.text = message;

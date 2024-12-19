@@ -12,7 +12,10 @@ public class VRDialogController : MonoBehaviour
     public float distanceFromCamera = 8.0f; // 對話框與鏡頭的距離
 
     private bool isDialogActive = false;
-
+    private void Start()
+    {
+        dialogPanel.SetActive(false);
+    }
     void Update()
     {
         // 檢查按鈕是否被按下
