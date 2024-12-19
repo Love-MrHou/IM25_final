@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.6225104, g: 0.7159476, b: 0.87146467, a: 1}
+  m_IndirectSpecularColor: {r: 0.6225156, g: 0.71595585, b: 0.871472, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1351,7 +1351,7 @@ MonoBehaviour:
   systemAnalystPrefab: {fileID: 480296909}
   engineerPrefab: {fileID: 573700889}
   designerPrefab: {fileID: 304387885}
-  _inkAssets: {fileID: 4900000, guid: 05565f82ba371c64bb0b6198701aefc4, type: 3}
+  _inkAssets: {fileID: 4900000, guid: a4bc72ca8d93f0a4bbd12b0395ee9482, type: 3}
 --- !u!83 &671157110
 AudioClip:
   m_ObjectHideFlags: 0
@@ -2687,9 +2687,21 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ChangeSceneButton
       objectReference: {fileID: 0}
+    - target: {fileID: 1269286002448611577, guid: 91cb9c67ce448ed4c9ee5f130733cade, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 28
+      objectReference: {fileID: 0}
     - target: {fileID: 2100379362857118124, guid: 91cb9c67ce448ed4c9ee5f130733cade, type: 3}
       propertyPath: m_Name
       value: "\u6703\u8B70\u6A21\u64ECui"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2803984234300496642, guid: 91cb9c67ce448ed4c9ee5f130733cade, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -15.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 2803984234300496642, guid: 91cb9c67ce448ed4c9ee5f130733cade, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 11.7
       objectReference: {fileID: 0}
     - target: {fileID: 3369441758102044268, guid: 91cb9c67ce448ed4c9ee5f130733cade, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2739,6 +2751,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3767461972284830963, guid: 91cb9c67ce448ed4c9ee5f130733cade, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8.361
+      objectReference: {fileID: 0}
+    - target: {fileID: 3767461972284830963, guid: 91cb9c67ce448ed4c9ee5f130733cade, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 11.469
+      objectReference: {fileID: 0}
     - target: {fileID: 4911701866973662720, guid: 91cb9c67ce448ed4c9ee5f130733cade, type: 3}
       propertyPath: m_audioClip
       value: 
@@ -2763,6 +2783,18 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 671157110}
+    - target: {fileID: 7374624393516324427, guid: 91cb9c67ce448ed4c9ee5f130733cade, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644336971662748563, guid: 91cb9c67ce448ed4c9ee5f130733cade, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8819015699075590757, guid: 91cb9c67ce448ed4c9ee5f130733cade, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 16
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4819075619794451922, guid: 91cb9c67ce448ed4c9ee5f130733cade, type: 3}
     - {fileID: 6844681748692612807, guid: 91cb9c67ce448ed4c9ee5f130733cade, type: 3}
@@ -3288,7 +3320,7 @@ Transform:
   m_GameObject: {fileID: 1751745346}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.7, y: 7.7071714, z: 11.7}
+  m_LocalPosition: {x: -4.57, y: 7.08, z: 10.42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

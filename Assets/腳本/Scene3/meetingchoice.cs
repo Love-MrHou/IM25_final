@@ -146,10 +146,6 @@ public class meetingchoice : MonoBehaviour
         var buttonText = buttonToUse.GetComponentInChildren<Text>();
         buttonText.text = choiceText;
 
-        if (choiceText.Length > 30)
-        {
-            buttonText.fontSize = 25; // 調整文字大小
-        }
 
         buttonToUse.gameObject.SetActive(true);
         buttonToUse.onClick.RemoveAllListeners();
