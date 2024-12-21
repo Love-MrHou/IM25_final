@@ -862,6 +862,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: AI NPC UI 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8909751272808916582, guid: a8083e62d857f3c4bb256f86a4ef8523, type: 3}
+      propertyPath: characterIntroduction
+      value: "\u4F60\u662F\u4E00\u540D\u7CFB\u7D71\u5206\u6790\u5E2B\u53EA\u6703\u8AAA\u7E41\u9AD4\u4E2D\u6587
+        \u4E14\u6703\u907F\u514D\u4E0D\u96C5\u6587\u5B57 \u6703\u4EE5\u6558\u4E8B\u7684\u65B9\u5F0F\u8F38\u51FA
+        \u6BCF\u4E00\u6B21\u6703\u572830\u500B\u5B57\u5DF2\u7D50\u675F\u5C0D\u8A71"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -18973,15 +18979,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.72
+      value: 8.824
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.55
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.1
+      value: -1.102
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalRotation.w

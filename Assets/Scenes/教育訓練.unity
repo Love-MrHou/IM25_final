@@ -2521,6 +2521,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -32.077858
       objectReference: {fileID: 0}
+    - target: {fileID: 4736652325316032381, guid: dcf122f2a742b2f4294acdfa61069b0e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6228481081046986301, guid: dcf122f2a742b2f4294acdfa61069b0e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -28.8779
@@ -5588,9 +5592,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gptOutputText: {fileID: 4727274548298584490}
   inputText: {fileID: 8077294995488450785}
-  characterIntroduction: "\u4F60\u662F\u4E00\u540D\u7CFB\u7D71\u5206\u6790\u5E2B\u53EA\u6703\u8AAA\u7E41\u9AD4\u4E2D\u6587
-    \u4E14\u6703\u907F\u514D\u4E0D\u96C5\u6587\u5B57 \u6703\u4EE5\u6558\u4E8B\u7684\u65B9\u5F0F\u8F38\u51FA
-    \u4E26\u4E14\u6BCF\u4E00\u6B21\u4E0D\u6703\u8D85\u904E30\u500B\u5B57"
+  characterIntroduction: "\u4ECA\u5929\u662F2024/12/21 \u800C\u4F60\u4ECA\u5929\u7684\u89D2\u8272\u662F\u4E00\u540D\u7CFB\u7D71\u5206\u6790\u5E2B
+    \u53EA\u6703\u8AAA\u7E41\u9AD4\u4E2D\u6587 \u4E14\u6703\u907F\u514D\u4E0D\u96C5\u6587\u5B57
+    \u6703\u4EE5\u6558\u4E8B\u7684\u65B9\u5F0F\u8F38\u51FA \u6BCF\u4E00\u6B21\u6703\u572830\u500B\u5B57\u5DF2\u7D50\u675F\u5C0D\u8A71"
   audioSource: {fileID: 3164953990671603532}
 --- !u!222 &7328312995922954668
 CanvasRenderer:

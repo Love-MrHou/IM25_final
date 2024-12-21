@@ -123,7 +123,7 @@ public class GPTManager2 : MonoBehaviour
             {
                 Model = Model.ChatGPTTurbo,
                 Temperature = 0.9,
-                MaxTokens = 100,
+                MaxTokens = 150,
                 Messages = messages
             });
 
